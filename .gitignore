@@ -1,0 +1,7 @@
+#Extraneous vim files
+*~
+*.swp
+*.swo
+
+#Extraneous Python
+*.pyc
