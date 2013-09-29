@@ -8,6 +8,7 @@ from urllib import request as urlrequest, parse
 import json
 import datetime
 import calendar
+import functools
 
 from flask import Flask, redirect, url_for
 app = Flask(__name__)
@@ -19,6 +20,7 @@ MAX_DAYS = 7
 def index():
   return redirect(url_for('static', filename='index.html'))
 
+@functools.lru_cache(maxsize=64)
 @app.route('/articles/nytimes/<subject>')
 def articles(subject):
   begin = (datetime.date.today() - datetime.timedelta(MAX_DAYS)).strftime("%Y%m%d")
@@ -31,6 +33,7 @@ def articles(subject):
   data = json.loads(urlrequest.urlopen(api).read().decode())['response']['docs'][:MAX_ARTICLES]
   return json.dumps(data)
 
+@functools.lru_cache(maxsize=64)
 @app.route('/article/<url>')
 def article(url):
   api = "https://api-ssl.bitly.com/v3/link/lookup?" + \
@@ -43,6 +46,7 @@ def article(url):
   info["clicks"] = article_clicks(info["url_short"])
 
   return json.dumps(info)
+
 
 def article_clicks(url_short):
   clicks = {}
