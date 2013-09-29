@@ -28,16 +28,16 @@ App.TopicRoute = App.Route.extend({
 App.TopicModel = Ember.Object.extend({
 	topic: "",
 	articles: [],
-	loading: new Ember.Set()
+	loading: 0
 });
 
 App.TopicModel.reopenClass({
 	find: function (topic) {
 		var model = App.TopicModel.create({ topic: topic });
 		var load = function (uri, callback) {
-			model.loading.add(uri);
+			model.set("loading", model.get("loading") + 1);
 			Ember.$.getJSON(uri).then(function (data) {
-				model.loading.remove(uri);
+				model.set("loading", model.get("loading") - 1);
 				callback(data);
 			}.bind(this));
 		}.bind(this);
@@ -76,9 +76,8 @@ App.TopicController = Ember.ObjectController.extend({
 	},
 
 	isLoading: function () {
-		console.log(this.get("loading").length + "   DSFDSA");
-		return this.get("loading").length > 0;
-	}.property("loading[]"),
+		return this.get("loading") > 0;
+	}.property("loading"),
 
 	clicks: function () {
 		var articles = this.get("articles");

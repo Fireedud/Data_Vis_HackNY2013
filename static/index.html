@@ -43,12 +43,9 @@
 	<script type="text/x-handlebars" id="topic">
 	<section class="page topic">
 		<header>
+			{{#if isLoading}}<img src="/static/images/loader.gif" class="loader" alt="loader"/>{{/if}}
 			<h1>{{#link-to 'index'}}NewsFlow{{/link-to}}</h1>
 			{{input type="text" value=topic action="goToTopic" placeholder="type a topic, press enter..."}}
-
-			{{#if isLoading}}
-			Loading
-			{{/if}}
 		</header>
 
 		<section class="map">

@@ -134,6 +134,11 @@ input {
 	padding: 0.64em 0 0.35em;
 }
 
+.page.topic header .loader {
+	float: right;
+	margin: 0.25em 1.5em;
+}
+
 .page.topic .map {
 	top: 2.6em;
 	bottom: 0;
