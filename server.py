@@ -27,7 +27,7 @@ def articles(subject):
   begin = (datetime.date.today() - datetime.timedelta(MAX_DAYS)).strftime("%Y%m%d")
   end = (datetime.date.today()).strftime("%Y%m%d")
   api = "http://api.nytimes.com/svc/search/v2/articlesearch.json?" + \
-        "q=" + subject + \
+        "q=" + clean(subject) + \
         "&begin_date=" + begin + "&end_date=" + end + \
         "&api-key=hackNY"
 
@@ -40,7 +40,6 @@ def article(url):
   api = "https://api-ssl.bitly.com/v3/link/lookup?" + \
         "url=" + url + \
         "&access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5"
-
   info = {}
   info["url"] = parse.unquote_plus(url)
   info["url_short"] = json.loads(urlrequest.urlopen(api).read().decode())['data']['link_lookup'][0]['aggregate_link']
@@ -65,6 +64,10 @@ def article_clicks(url_short):
       clicks[ts][country["country"]] = country["clicks"]
 
   return clicks
+
+def clean(url):
+	'''Escapes url characters'''
+	return parse.quote_plus(url)
 
 if __name__ == '__main__':
   app.debug = True
