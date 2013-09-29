@@ -72,10 +72,6 @@ input {
 	font-size: 4em;
 }
 
-.page.index header h1 a {
-	border: 0;
-}
-
 .page.index input {
 	width: 100%;
 }

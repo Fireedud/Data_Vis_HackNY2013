@@ -44,6 +44,5 @@ App.MapView = Ember.View.extend({
 		map.setView([0, 0], 2);
 
 		this.set("map", map);
-		this.set("countries", )
 	}
 });
