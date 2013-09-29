@@ -107,16 +107,16 @@ input {
 /* Page: Topic */
 
 .page.topic header,
-.page.topic .map {
+.page.topic .map,
+.page.topic footer {
 	position: absolute;
-	overflow: hidden;
 	left: 0;
 	right: 0;
 }
 
 .page.topic header {
 	top: 0;
-	height: 3.5em;
+	height: 2.6em;
 	background: #333;
 }
 
@@ -131,6 +131,16 @@ input {
 }
 
 .page.topic .map {
-	top: 3.5em;
+	top: 2.6em;
+	bottom: 2.6em;
+}
+
+.page.topic .map .leaflet-container {
+	height: 100%;
+}
+
+.page.topic footer {
+	height: 2.6em;
+	background: #333;
 	bottom: 0;
 }

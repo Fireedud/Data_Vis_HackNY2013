@@ -46,12 +46,17 @@
 			{{input type="text" value=topic action="goToTopic" placeholder="type a topic, press enter..."}}
 		</header>
 
-		{{view App.MapView}}
+		<section class="map">
+			{{view App.MapView}}
+		</section>
+
+		<footer>
+			{{view App.SliderView}}
+		</footer>
 	</section>
 	</script>
 
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<script src="http://maps.stamen.com/js/tile.stamen.js?v1.2.3"></script>
 
 	<script src="js/jquery.js"></script>
