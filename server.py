@@ -6,6 +6,7 @@
 
 from urllib import request as urlrequest
 import json
+import functools
 
 from flask import Flask, redirect, url_for
 app = Flask(__name__)
@@ -22,6 +23,7 @@ def css():
 def js():
 	return redirect(url_for('static', filename=request.path))
 
+@functools.lru_cache(maxsize=64)
 @app.route('/article/<subject>')
 def nytimes(subject):
 	data = json.loads(urlrequest.urlopen("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + subject + "&begin_date=20130828&end_date=20130929&api-key=hackNY").read().decode())['response']['docs'][:3]
@@ -45,6 +47,7 @@ def httpstring(url):
 			urlproxy += char
 	return urlproxy
 
+@functools.lru_cache(maxsize=64)
 def click_info(bitly):
 	'''Gather click info given a bitly link'''
 	bitly = httpstring(bitly)
