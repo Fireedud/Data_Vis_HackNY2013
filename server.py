@@ -4,6 +4,8 @@
 
 #NB This will use Python 3.x and Flask
 
+from urllib import request as urlrequest
+
 from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
@@ -19,6 +21,10 @@ def css():
 def js():
 	return redirect(url_for('static', filename=request.path))
 
+@app.route('/article/<subject>')
+def nytimes(subject):
+	return urlrequest.urlopen("http://api.nytimes.com/svc/search/v1/article?format=json&query=" + subject + "&api-key=hackNY").read()
 
 if __name__ == '__main__':
+	#app.debug = True
 	app.run()
