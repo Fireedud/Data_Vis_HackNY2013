@@ -37,7 +37,7 @@ App.MapView = Ember.View.extend({
 
 	didInsertElement: function () {
 		var element = this.$().get(0);
-		var layer = new L.StamenTileLayer("toner-background");
+		var layer = new L.StamenTileLayer("toner-lite");
 		var map = new L.Map(element);
 		map.addLayer(layer);
 		map.setView([0, 0], 2);

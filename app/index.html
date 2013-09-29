@@ -14,14 +14,28 @@
 	<script type="text/x-handlebars" id="index">
 	<section class="page index">
 		<header>
-			<h1>NewsFlow</h1>
+			<h1>{{#link-to 'index'}}NewsFlow{{/link-to}}</h1>
+		</header>
+
+		<section class="description">
 			<p>
-				A visualization of how New York Times articles flow through the Internet
-				and how they relate to the wider news cycle on various topics.
+				Visualize how news articles about a topic
+				relate to the wider discourse.
 			</p>
 
-			{{input type="text" action="goToTopic" placeholder="type a topic here..."}}
-		</header>
+			{{input type="text" action="goToTopic" placeholder="type a topic, press enter..."}}
+		</section>
+
+		<footer>
+			<p>
+				<a href="https://github.com/Fireedud">Aman Grewal</a> &amp;
+				<a href="https://github.com/hellojwilde">Jonathan Wilde</a>,
+				Fall '13 HackNY Hackathon
+			</p>
+			<p class="photo-credit">
+				Photo: <a href="http://www.flickr.com/photos/prasenberg/4742836602/in/photolist-8e7h5S-4RvpnT-8TmgZ5-a1rdZ7-6q4qDu-2Vi7v-4R7eQN-GHwCy-73jBgL-7KzL7X-55xDdM-AJTEB-bD2sgA-bRWb6Z-bD2sjW-bD2swy-74Dwuy-4jwid4-PcdBi-92t5t9-abCgMT-aSjkWi-6N4H97-ckrqtU-dSyHz4-cdeZYN-4bsbP9-4TJ2Vd-bWasMX-5zsvNn-6WGHFb-9WxBdi-7ULLhH-9tqfAm-qjgX2-bHgTiv-bun5AQ-bun69b-bun6cm-bHgTvT-bHgTta-bun6gE-bHgTNe-bun5Ey-bun5U5-bun66s-bun5QG-bun5wN-bun5nj-bun64u-bHgTfM/">"New York Times"</a> by Patrick Rasenberg, used under a Creative Commons license.
+			</p>
+		</footer>
 	</section>
 	</script>
 

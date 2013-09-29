@@ -2,47 +2,139 @@ h1 {
 	font-family: Oswald, serif;
 	font-weight: normal;
 	text-transform: uppercase;
+	margin-top: 0;
+	margin-bottom: 0.25em;
+	line-height: 1em;
 }
 
-.page.topic header {
-	background: #3399FF;
+a {
+	text-decoration: none;
+	border-bottom: 1px solid white;
+}
+
+h1 a {
+	color: white;
+	border-bottom: 0 none;
+}
+
+h1 a:hover {
+	border-bottom: 3px solid white;
+}
+
+input {
+	background: transparent;
+	border: none;
+	border-bottom: 3px solid white;
+	color: white;
+	padding: 0.5em 0;
+	font-size: 1.2em;
+}
+
+/* Page: Index */
+
+.page.index {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 4em;
+	bottom: 0;
+	background: url(http://farm5.staticflickr.com/4141/4742836602_eecca779e7_o.jpg) no-repeat center center;
+	background-size: cover;
 }
 
+.page.index p,
+.page.index h1,
+.page.index input {
+	text-shadow: black 0 1px 0;
+}
+
+.page.index p,
+.page.index h1,
+.page.index input,
+.page.index a {
+	color: #fff;
+}
+
+.page.index header,
+.page.index .description,
+.page.index footer {
+	position: absolute;
+	padding: 3em;
+}
+
+.page.index header {
+	top: 0;
+	left: 0;
+	padding: 4em 3em;
+}
+
+.page.index header h1 {
+	font-size: 4em;
+}
+
+.page.index header h1 a {
+	border: 0;
+}
+
+.page.index input {
+	width: 100%;
+}
+
+.page.index .description {
+	top: 3em;
+	right: 3em;
+	max-width: 20em;
+	background: rgba(0,0,0,0.6);
+	padding: 1.5em;
+}
+
+.page.index .description p {
+	font-size: 1.4em;
+	margin-bottom: 0.2em;
+}
+
+.page.index p {
+    margin: 0;
+}
+
+.page.index footer {
+  bottom: 0;
+  left: 0;
+  line-height: 1.5em;
+  padding-bottom: 2em;
+}
+
+.page.index footer .photo-credit {
+	opacity: 0.5;
+}
+
+/* Page: Topic */
+
+.page.topic header,
 .page.topic .map {
 	position: absolute;
-	top: 4em;
+	overflow: hidden;
 	left: 0;
 	right: 0;
-	bottom: 0;
+}
+
+.page.topic header {
+	top: 0;
+	height: 3.5em;
+	background: #333;
 }
 
 .page.topic header h1 {
-	margin: 0;
 	float: left;
+	padding: 0.375em 1em 0em;
 	font-size: 1.5em;
-	padding: 0.2em 0.5em;
-}
-
-.page.topic header h1 a {
-	color: white;
-	text-decoration: none;
-}
-
-.page.topic header h1 a:hover {
-	border-bottom: 2px solid white;
 }
 
 .page.topic header input {
-	background: transparent;
-	color: white;
-	font-size: 1.25em;
-	border: none;
-	border-bottom: 2px solid white;
-	padding: 0.75em 0 0.3em;
-	margin-left: 0.5em;
+	padding: 0.64em 0 0.35em;
+}
+
+.page.topic .map {
+	top: 3.5em;
+	bottom: 0;
 }
