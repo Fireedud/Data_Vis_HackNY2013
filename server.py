@@ -53,7 +53,7 @@ def click_info(bitly):
 	bitly = httpstring(bitly)
 	clicks = {}
 	for i in range(4):
-		info = json.loads(urlrequest.urlopen("https://api-ssl.bitly.com/v3/link/countries?access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5&link=" + bitly + "&unit=week&units=" + str(i+1)).read().decode())["data"]["countries"]
+		info = json.loads(urlrequest.urlopen("https://api-ssl.bitly.com/v3/link/countries?access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5&link=" + bitly + "&unit=week&units=" + str(i+1) + "&limit=250").read().decode())["data"]["countries"]
 		clicks["week" + str(i+1)] = {}
 		if i == 0:
 			for x in info:
