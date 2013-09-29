@@ -4,67 +4,63 @@
 
 #NB This will use Python 3.x and Flask
 
-from urllib import request as urlrequest
+from urllib import request as urlrequest, parse
 import json
+import datetime
+import calendar
 
 from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
+MAX_ARTICLES = 5
+MAX_DAYS = 7
+
 @app.route('/')
 def index():
-	return redirect(url_for('static', filename='index.html'))
+  return redirect(url_for('static', filename='index.html'))
 
-@app.route('/css/')
-def css():
-	return redirect(url_for('static', filename=request.path))
+@app.route('/articles/nytimes/<subject>')
+def articles(subject):
+  begin = (datetime.date.today() - datetime.timedelta(MAX_DAYS)).strftime("%Y%m%d")
+  end = (datetime.date.today()).strftime("%Y%m%d")
+  api = "http://api.nytimes.com/svc/search/v2/articlesearch.json?" + \
+        "q=" + subject + \
+        "&begin_date=" + begin + "&end_date=" + end + \
+        "&api-key=hackNY"
 
-@app.route('/js/')
-def js():
-	return redirect(url_for('static', filename=request.path))
+  data = json.loads(urlrequest.urlopen(api).read().decode())['response']['docs'][:MAX_ARTICLES]
+  return json.dumps(data)
 
-@app.route('/article/<subject>')
-def nytimes(subject):
-	data = json.loads(urlrequest.urlopen("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + subject + "&begin_date=20130828&end_date=20130929&api-key=hackNY").read().decode())['response']['docs'][:3]
-	for item in data:
-		urlproxy = httpstring(item['web_url'])
-		item["bitly"] = json.loads(urlrequest.urlopen("https://api-ssl.bitly.com/v3/link/lookup?url=" + urlproxy + "&access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5").read().decode())['data']['link_lookup'][0]['aggregate_link']
-		item['click_info'] = click_info(item['bitly'])
-	return json.dumps(data)
+@app.route('/article/<url>')
+def article(url):
+  api = "https://api-ssl.bitly.com/v3/link/lookup?" + \
+        "url=" + url + \
+        "&access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5"
 
-def httpstring(url):
-	'''Make a url suitable for passing as an argument to another url.
+  info = {}
+  info["url"] = parse.unquote_plus(url)
+  info["url_short"] = json.loads(urlrequest.urlopen(api).read().decode())['data']['link_lookup'][0]['aggregate_link']
+  info["clicks"] = article_clicks(info["url_short"])
 
-	This means eliminating all special characters.'''
-	urlproxy = ""
-	for char in url:
-		if char == ':':
-			urlproxy += '%3A'
-		elif char == '/':
-			urlproxy += '%2F'
-		else:
-			urlproxy += char
-	return urlproxy
+  return json.dumps(info)
 
-def click_info(bitly):
-	'''Gather click info given a bitly link'''
-	bitly = httpstring(bitly)
-	clicks = {}
-	for i in range(4):
-		info = json.loads(urlrequest.urlopen("https://api-ssl.bitly.com/v3/link/countries?access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5&link=" + bitly + "&unit=week&units=" + str(i+1)).read().decode())["data"]["countries"]
-		clicks["week" + str(i+1)] = {}
-		if i == 0:
-			for x in info:
-				clicks["week" + str(i+1)][x["country"]] = x["clicks"]
-		else:
-			for x in info:
-				try:
-					clicks["week" + str(i+1)][x["country"]] = x["clicks"] - clicks["week" + str(i)][x["country"]]
-				except KeyError:
-					clicks["week" + str(i+1)][x["country"]] = x["clicks"]
-	return clicks
-			
-		
+def article_clicks(url_short):
+  clicks = {}
+  api = "https://api-ssl.bitly.com/v3/link/countries?" + \
+        "link=" + parse.quote_plus(url_short) + \
+        "&unit=day&units=1" + \
+        "&access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5"
+
+  for i in range(MAX_DAYS):    
+    ts = (datetime.date.today() - datetime.timedelta(i)).strftime("%s")
+    countries = json.loads(urlrequest.urlopen(api + "&unit_reference_ts=" + ts).read().decode())["data"]["countries"]
+
+    clicks[ts] = {}
+    for country in countries:
+      clicks[ts][country["country"]] = country["clicks"]
+
+  return clicks
 
 if __name__ == '__main__':
-	#app.debug = True
-	app.run()
+  app.debug = True
+  app.run()

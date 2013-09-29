@@ -48,12 +48,30 @@
 		</header>
 
 		<section class="map">
-			{{view App.MapView}}
-		</section>
+			{{view App.MapView magnitudesBinding="magnitudes"}}
 
-		<footer>
-			<div class="slider">{{view App.SliderView valueBinding="myValue"}}</div>
-		</footer>
+			<section class="map-settings">
+				<h2>Tracked Articles</h2>
+				<ol>
+					{{#each article in articles}}
+					<li class="article">
+						<a {{bindAttr href=article.web_url}}>
+							{{article.headline.main}}
+						</a>
+					</li>
+					{{/each}}
+				</ol>
+
+				<h2>Time</h2>
+				<div class="slider">
+					{{view App.SliderView valueBinding="sliderValue"}}
+					<div class="slider-labels">
+						<span class="slider-weekago">A Week Ago</span>
+						<span class="slider-now">Now</span>
+					</div>
+				</div>
+			</section>
+		</section>
 	</section>
 	</script>
 
