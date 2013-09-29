@@ -42,7 +42,7 @@ App.TopicModel.reopenClass({
 			}.bind(this));
 		}.bind(this);
 
-		load('/articles/nytimes/' + topic, function (articles) {
+		load('/articles/nytimes/' + encodeURIComponent(encodeURIComponent(topic)), function (articles) {
 			var as = articles.map(function (article) {
 				var a = Ember.Object.create(article);
 				var uri = '/article/' + encodeURIComponent(encodeURIComponent(article.web_url));
@@ -75,11 +75,14 @@ App.TopicController = Ember.ObjectController.extend({
 		return magnitudes;
 	},
 
+	isLoading: function () {
+		console.log(this.get("loading").length + "   DSFDSA");
+		return this.get("loading").length > 0;
+	}.property("loading[]"),
+
 	clicks: function () {
 		var articles = this.get("articles");
 		var all = {};
-
-		console.log(articles);
 
 		articles.forEach(function (article) {
 			for (var time in article.clicks) {

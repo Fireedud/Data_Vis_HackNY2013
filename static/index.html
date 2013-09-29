@@ -45,6 +45,10 @@
 		<header>
 			<h1>{{#link-to 'index'}}NewsFlow{{/link-to}}</h1>
 			{{input type="text" value=topic action="goToTopic" placeholder="type a topic, press enter..."}}
+
+			{{#if isLoading}}
+			Loading
+			{{/if}}
 		</header>
 
 		<section class="map">

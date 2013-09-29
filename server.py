@@ -5,6 +5,7 @@
 #NB This will use Python 3.x and Flask
 
 from urllib import request as urlrequest, parse
+from time import mktime
 import json
 import datetime
 import calendar
@@ -55,7 +56,7 @@ def article_clicks(url_short):
         "&access_token=9f2029905b05a9527b20e12275c6ec5eff33f1f5"
 
   for i in range(MAX_DAYS):    
-    ts = (datetime.date.today() - datetime.timedelta(i)).strftime("%s")
+    ts = str(int(mktime((datetime.date.today() - datetime.timedelta(i)).timetuple())))
     countries = json.loads(urlrequest.urlopen(api + "&unit_reference_ts=" + ts).read().decode())["data"]["countries"]
 
     clicks[ts] = {}
