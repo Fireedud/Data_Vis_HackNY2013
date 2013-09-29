@@ -20,7 +20,7 @@
 		<section class="description">
 			<p>
 				Visualize how news articles about a topic
-				relate to the wider discourse.
+				fit in to the larger discourse.
 			</p>
 
 			{{input type="text" action="goToTopic" placeholder="type a topic, press enter..."}}
@@ -43,7 +43,7 @@
 	<section class="page topic">
 		<header>
 			<h1>{{#link-to 'index'}}NewsFlow{{/link-to}}</h1>
-			{{input type="text" value=search action="goToTopic" placeholder="type a topic here..."}}
+			{{input type="text" value=topic action="goToTopic" placeholder="type a topic, press enter..."}}
 		</header>
 
 		{{view App.MapView}}
@@ -51,6 +51,7 @@
 	</script>
 
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<script src="http://maps.stamen.com/js/tile.stamen.js?v1.2.3"></script>
 
 	<script src="js/jquery.js"></script>
