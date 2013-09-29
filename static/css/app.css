@@ -144,3 +144,7 @@ input {
 	background: #333;
 	bottom: 0;
 }
+
+.page.topic footer .slider {
+	margin: 0.75em 2em;
+}

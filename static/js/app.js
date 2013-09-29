@@ -4,6 +4,13 @@ App.TopicModel = Ember.Object.extend({
 	topic: ""
 });
 
+App.TopicModel.reopenClass({
+	find: function (topic) {
+		var model = App.TopicModel.create({ topic: topic });
+		return model;
+	}
+});
+
 App.Router.map(function () {
 	this.resource('topic', { path: '/topic/:topic' });
 });
@@ -11,25 +18,26 @@ App.Router.map(function () {
 App.Route = Ember.Route.extend({
 	actions: {
 		goToTopic: function (topic) {
-			// TODO: Display some sort of spinner that denotes whether there 
-			// were any articles found for the topic.
-			var model = App.TopicModel.create({ topic: topic });
+			var model = App.TopicModel.find(topic);
 			this.transitionTo("topic", model);
 		}
 	}
 });
 
 App.IndexRoute = App.Route.extend({});
+
 App.TopicRoute = App.Route.extend({
 	model: function (params) {
-		// TODO: Actually fetch data from the server in this condition.
-		var model = App.TopicModel.create({ topic: params.topic });
-		return model;
+		return App.TopicModel.find(params.topic);
 	},
 
 	serialize: function (model, params) {
 		return { topic: model.get("topic") }
 	} 
+});
+
+App.TopicController = Ember.ObjectController.extend({
+	sliderValue: 0
 });
 
 App.MapView = Ember.View.extend({
@@ -63,7 +71,8 @@ App.MapView = Ember.View.extend({
 
 	didInsertElement: function () {
 		var element = this.$().get(0);
-		var map = new L.Map(element);
+		var options = { minZoom: 2, maxZoom: 4, zoomAnimation: false };
+		var map = new L.Map(element, options);
 		var tiles = new L.StamenTileLayer("toner-lite");
 
 		map.setView([40, 0], 2);
@@ -85,5 +94,20 @@ App.MapView = Ember.View.extend({
 });
 
 App.SliderView = Ember.View.extend({
+	value: 0,
+	min: 0,
+	max: 5,
+	step: 1,
 
+	didInsertElement: function () {
+		this.$().slider({
+			value: this.get("value"),
+			min: this.get("min"),
+			max: this.get("max"),
+			step: this.get("step"),
+			slide: function (event, ui) {
+				this.set("value", ui.value);
+			}.bind(this)
+		});
+	}
 });
