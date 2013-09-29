@@ -26,7 +26,7 @@ def articles(subject):
   begin = (datetime.date.today() - datetime.timedelta(MAX_DAYS)).strftime("%Y%m%d")
   end = (datetime.date.today()).strftime("%Y%m%d")
   api = "http://api.nytimes.com/svc/search/v2/articlesearch.json?" + \
-        "q=" + subject + \
+        "q=" + clean(subject) + \
         "&begin_date=" + begin + "&end_date=" + end + \
         "&api-key=hackNY"
 
@@ -63,6 +63,10 @@ def article_clicks(url_short):
       clicks[ts][country["country"]] = country["clicks"]
 
   return clicks
+
+def clean(url):
+	'''Escapes url characters'''
+	return parse.quote_plus(url)
 
 if __name__ == '__main__':
   app.debug = True
