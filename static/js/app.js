@@ -160,7 +160,7 @@ App.MapView = Ember.View.extend({
 App.SliderView = Ember.View.extend({
 	value: 0,
 	min: 0,
-	max: 6,
+	max: 10,
 	step: 1,
 
 	didInsertElement: function () {

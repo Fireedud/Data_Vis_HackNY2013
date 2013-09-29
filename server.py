@@ -47,7 +47,7 @@ def article(url):
 
   return json.dumps(info)
 
-
+@functools.lru_cache(maxsize=64)
 def article_clicks(url_short):
   clicks = {}
   api = "https://api-ssl.bitly.com/v3/link/countries?" + \
